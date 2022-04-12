@@ -37,14 +37,6 @@ const item3 = new Item({
 
 const defaultItems = [item1, item2, item3];
 
-//Creating Schema for immediate routes
-// const listSchema = {
-//   name: String,
-//   items: [itemsSchema],
-// };
-
-// const List = mongoose.model("List", listSchema);
-
 app.get("/", function (req, res) {
   Item.find({}, function (err, foundItems) {
     if (foundItems.length === 0) {
@@ -61,6 +53,13 @@ app.get("/", function (req, res) {
     }
   });
 });
+
+
+app.get("/:customListName", function (req, res) {
+  console.log(req.params.customListName);
+});
+
+
 
 // We save new entry in database
 // and then redirect to root route
@@ -82,6 +81,7 @@ app.post("/delete", function (req, res) {
     }
   });
 });
+
 
 app.listen(3000, function () {
   console.log("Server Has Started On Port 3000.");
