@@ -62,7 +62,26 @@ app.get("/", function (req, res) {
   });
 });
 
-app.post("/", function (req, res) {});
+// We save new entry in database
+// and then redirect to root route
+app.post("/", function (req, res) {
+  const itemName = req.body.newItem;
+  const item = new Item({
+    name: itemName,
+  });
+  item.save();
+  res.redirect("/");
+});
+
+app.post("/delete", function (req, res) {
+  const checkedItemId = req.body.checkbox;
+  Item.findByIdAndRemove(checkedItemId, function (err) {
+    if (!err) {
+      console.log("Successfully deleted checked item.");
+      res.redirect("/");
+    }
+  });
+});
 
 app.listen(3000, function () {
   console.log("Server Has Started On Port 3000.");
